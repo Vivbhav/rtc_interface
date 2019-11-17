@@ -1,0 +1,22 @@
+# arm-none-eabi-gdb -batch -x 'program.gdb' spi-flash.elf
+
+# selecting elf file as input to arm-none-eabi-gdb
+# connect to target
+target remote localhost:3333
+
+# halt and reset target
+mon halt
+mon reset init
+
+# load the selected program
+symbol-file ./build/gcc/bin/spi-flash.elf
+load ./build/gcc/bin/spi-flash.elf
+
+# set gpnvm bit to boot from flash
+mon atsamv gpnvm set 1
+
+#break ../..libraries/libchip/source/spi.c:193
+
+break spi.c:244
+break spi.c:246
+break spi.c:248
